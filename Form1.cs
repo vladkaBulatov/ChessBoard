@@ -48,12 +48,12 @@ namespace Шахматная_доска
         }
         
 
-        private static void CreateCell(Graphics graph, SolidBrush solidBrush, float x, float y, float sizeSquare)
+        private void CreateCell(Graphics graph, SolidBrush solidBrush, float x, float y, float sizeSquare)
         {            
             graph.FillRectangle( solidBrush, x, y, sizeSquare, sizeSquare);
         }
 
-        private static void CreateCells(Graphics graph, Point pointStartDrawChessboard, float cellSideLength, int numberCellsRow)
+       private void CreateCells(Graphics graph, Point pointStartDrawChessboard, float cellSideLength, int numberCellsRow)
         {
             var thicknessFrame = pointStartDrawChessboard.X * 2;
             var blackBrash = new SolidBrush(Color.Black);
@@ -87,7 +87,7 @@ namespace Шахматная_доска
                     diameterСhecker);
         }
 
-        private static void CreateFrame(Graphics graph, Pen pen, float x, float y, float widthEdging, float thicknessEdging)
+        private void CreateFrame(Graphics graph, Pen pen, float x, float y, float widthEdging, float thicknessEdging)
         {
             graph.DrawRectangle(pen, x, y, widthEdging, widthEdging);
         }
