@@ -34,12 +34,14 @@
             // 
             // picture
             // 
+            this.picture.BackColor = System.Drawing.SystemColors.ActiveCaption;
             this.picture.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.picture.Location = new System.Drawing.Point(-2, -2);
+            this.picture.Location = new System.Drawing.Point(-1, -2);
             this.picture.Name = "picture";
-            this.picture.Size = new System.Drawing.Size(566, 483);
+            this.picture.Size = new System.Drawing.Size(600, 448);
             this.picture.TabIndex = 0;
             this.picture.TabStop = false;
+            this.picture.SizeChanged += new System.EventHandler(this.picture_SizeChanged);
             this.picture.Click += new System.EventHandler(this.picture_Click);
             this.picture.Paint += new System.Windows.Forms.PaintEventHandler(this.picture_Paint);
             // 
@@ -47,12 +49,13 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(704, 482);
+            this.ClientSize = new System.Drawing.Size(730, 458);
             this.Controls.Add(this.picture);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
             this.Name = "Form1";
             this.Text = "Form1";
             this.Load += new System.EventHandler(this.Form1_Load);
+            this.SizeChanged += new System.EventHandler(this.Form1_SizeChanged);
             ((System.ComponentModel.ISupportInitialize)(this.picture)).EndInit();
             this.ResumeLayout(false);
 

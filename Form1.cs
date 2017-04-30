@@ -12,70 +12,92 @@ namespace Шахматная_доска
 {
     public partial class Form1 : Form
     {
+        
+        
+
         public Form1()
         {
             InitializeComponent();
+            picture.Width = Math.Min(this.Width, this.Height) - 50;
+            picture.Height = Math.Min(this.Width, this.Height) - 50;
+
+            Chessboard();
             
-            //DrawEllipse(486, 158, 40, 40);
-            Draw();
-        }
-        
-        private void DrawEllipse(int x, int y, int rx, int ry)
-        {
-            Bitmap bmp1 = new Bitmap(picture.Width, picture.Height);
-            Pen pen = new Pen(Color.Black);
-            Graphics graph1 = Graphics.FromImage(bmp1);
-            Rectangle rect = new Rectangle(x, y, rx, ry);
-            graph1.DrawEllipse(pen, rect);
-
-            picture.Image = bmp1;
-
             
         }
-
-        public void Draw()
+        public void Chessboard()
         {
-            SolidBrush solidBrush = new SolidBrush(Color.Black);
-            //Color.FromArgb(255, 255, 0, 0));
-
-
+            SolidBrush solidBrushBlack = new SolidBrush(Color.Black);
+            SolidBrush solidBrushWhite = new SolidBrush(Color.White);
+            SolidBrush myBrushBlue = new SolidBrush(Color.Blue);
+            SolidBrush myBrushGold = new SolidBrush(Color.Gold);
             Bitmap bmp = new Bitmap(picture.Width, picture.Height);
             Graphics graph = Graphics.FromImage(bmp);
             Pen pen = new Pen(Color.Black);
-            // шашка
 
-            graph.FillRectangle(solidBrush, 10, 10, 100, 100);
-            //оконтовка
-            graph.DrawLine(pen, 10, 10, 446, 10);
-            graph.DrawLine(pen, 10, 10, 10, 446);
-            graph.DrawLine(pen, 10, 446, 446, 446);
-            graph.DrawLine(pen, 446, 10, 446, 446);
-            //горизонтальные линии
-            graph.DrawLine(pen, 40, 40, 416, 40);
-            graph.DrawLine(pen, 40, 87, 416, 87);
-            graph.DrawLine(pen, 40, 134, 416, 134);
-            graph.DrawLine(pen, 40, 181, 416, 181);
-            graph.DrawLine(pen, 40, 228, 416, 228);
-            graph.DrawLine(pen, 40, 275, 416, 275);
-            graph.DrawLine(pen, 40, 322, 416, 322);
-            graph.DrawLine(pen, 40, 369, 416, 369);
-            graph.DrawLine(pen, 40, 416, 416, 416);
-            //вертикальные линии
-            graph.DrawLine(pen, 40, 40, 40, 416);
-            graph.DrawLine(pen, 87, 40, 87, 416);
-            graph.DrawLine(pen, 134, 40, 134, 416);
-            graph.DrawLine(pen, 181, 40, 181, 416);
-            graph.DrawLine(pen, 228, 40, 228, 416);
-            graph.DrawLine(pen, 275, 40, 275, 416);
-            graph.DrawLine(pen, 322, 40, 322, 416);
-            graph.DrawLine(pen, 369, 40, 369, 416);
-            graph.DrawLine(pen, 416, 40, 416, 416);
+            var indentX = 20;
+            var indentY = 20;
+            var pointStartDrawChessboard = new Point(indentX, indentY);
+            var frameWidth = Math.Min(picture.Width, picture.Height) - 2 * pointStartDrawChessboard.X;
+            var thicknessFrame = pointStartDrawChessboard.X * 2;
 
-            
-            
-            
+            CreateFrame(graph, pen, pointStartDrawChessboard.X, pointStartDrawChessboard.Y, frameWidth, thicknessFrame);
 
-            picture.Image = bmp;
+            var NumberCellsRow = 8;
+            float cellSideLength = (frameWidth - 2 * thicknessFrame) / NumberCellsRow;
+
+            for (int numberString = 0; numberString < NumberCellsRow; numberString++)
+                for (int numberColumn = 0; numberColumn < NumberCellsRow; numberColumn++)
+                {
+                    SolidBrush solidBrush = new SolidBrush((numberString + numberColumn) % 2 == 0 ? Color.Black : Color.White);
+
+                    CreateCell(graph,
+                        solidBrush,
+                        pointStartDrawChessboard.X + (numberColumn * cellSideLength) + thicknessFrame,
+                        pointStartDrawChessboard.Y + (numberString * cellSideLength) + thicknessFrame,
+                        cellSideLength
+                    );
+                }
+            for (int numberString = 0; numberString < NumberCellsRow; numberString++)
+                for (int checkerNumber = 0; checkerNumber < NumberCellsRow / 2; checkerNumber ++)
+                {
+                GreateСheckers(graph,
+                    myBrushBlue,
+                    pointStartDrawChessboard.X + ((NumberCellsRow / 2) + (cellSideLength * checkerNumber) * 2) + thicknessFrame,
+                    pointStartDrawChessboard.Y + (NumberCellsRow / 2) + cellSideLength,
+                    cellSideLength - 10,
+                    cellSideLength - 10);
+                }
+            //GreateСheckers(graph, myBrushBlue, 66, 66, 30, 30);
+            //GreateСheckers(graph, myBrushBlue, 156, 66, 30, 30);
+            //GreateСheckers(graph, myBrushBlue, 246, 66, 30, 30);
+            //GreateСheckers(graph, myBrushBlue, 336, 66, 30, 30);
+
+
+
+            picture.Image= bmp;
+        }
+        public void GreateСheckers(Graphics graph, SolidBrush myBrushBlue, float x, float y, float d, float d1)
+        {
+            graph.FillEllipse(myBrushBlue, x, y, d, d1); 
+        }
+
+        private static void CreateCell(Graphics graph, SolidBrush solidBrush, float x, float y, float sizeSquare)
+        {
+            //если не будет больше никаких действий можно не использовать фукнцию CreateCell
+            graph.FillRectangle( solidBrush, x, y, sizeSquare, sizeSquare);
+        }
+
+        private static void CreateField(Graphics graph, Pen pen, SolidBrush solidBrush, float x, float y, float sizeSquare)
+        {
+            
+        }
+        
+
+        private static void CreateFrame(Graphics graph, Pen pen, float x, float y, float widthEdging, float thicknessEdging)
+        {
+            graph.DrawRectangle(pen, x, y, widthEdging, widthEdging);
+           // graph.DrawRectangle(pen, x + thicknessEdging, y + thicknessEdging, widthEdging - 2 * thicknessEdging, widthEdging - 2 * thicknessEdging);
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -91,6 +113,17 @@ namespace Шахматная_доска
         private void picture_Paint(object sender, PaintEventArgs e)
         {
             
+        }
+
+        private void Form1_SizeChanged(object sender, EventArgs e)
+        {
+            picture.Width = Math.Min(this.Width, this.Height) + 50;
+            picture.Height = Math.Min(this.Width, this.Height) + 50;
+        }
+
+        private void picture_SizeChanged(object sender, EventArgs e )
+        {
+
         }
     }
 }
