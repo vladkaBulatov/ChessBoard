@@ -33,16 +33,16 @@ namespace Шахматная_доска
             var indentX = 20;
             var indentY = 20;
             var pointStartDrawChessboard = new Point(indentX, indentY);
-            var frameWidth = Math.Min(picture.Width, picture.Height) - 2 * pointStartDrawChessboard.X;
-            var numberCellsRow = 8;
             var thicknessFrame = pointStartDrawChessboard.X * 2;
+            var pointStartDrawCellsOnBoard = new Point(pointStartDrawChessboard.X + thicknessFrame, pointStartDrawChessboard.Y + thicknessFrame);
+            var frameWidth = Math.Min(picture.Width, picture.Height) - 2 * pointStartDrawChessboard.X;
+            var numberCellsRow = 8;            
             var cellSideLength = Convert.ToInt32((frameWidth - 2 * thicknessFrame) / numberCellsRow);
             var diameterСhecker = cellSideLength - 10;
 
-
             CreateFrame(graph, pen, pointStartDrawChessboard.X, pointStartDrawChessboard.Y, frameWidth, thicknessFrame);
-            CreateCells(graph, pointStartDrawChessboard, cellSideLength, numberCellsRow);
-            CreateСheckers(graph, myBrushBlue, pointStartDrawChessboard, cellSideLength, numberCellsRow, diameterСhecker);
+            CreateCells(graph, pointStartDrawCellsOnBoard, cellSideLength, numberCellsRow, thicknessFrame);
+            CreateСheckers(graph, myBrushBlue, pointStartDrawCellsOnBoard, cellSideLength, numberCellsRow, diameterСhecker);
 
             picture.Image= bmp;
         }
@@ -53,20 +53,19 @@ namespace Шахматная_доска
             graph.FillRectangle( solidBrush, x, y, sizeSquare, sizeSquare);
         }
 
-       private void CreateCells(Graphics graph, Point pointStartDrawChessboard, float cellSideLength, int numberCellsRow)
-        {
-            var thicknessFrame = pointStartDrawChessboard.X * 2;
+       private void CreateCells(Graphics graph, Point pointStartDraw, float cellSideLength, int numberCellsRow, int thicknessFrame)
+       {
             var blackBrash = new SolidBrush(Color.Black);
             var whiteBrash = new SolidBrush(Color.White);
 
-            for (int numberString = 0; numberString < numberCellsRow; numberString++)
-                for (int numberColumn = 0; numberColumn < numberCellsRow; numberColumn++)
+            for (int numberString = 0; numberString < numberCellsRow; numberString++)//рисование строк с ячейками в столбик
+                for (int numberColumn = 0; numberColumn < numberCellsRow; numberColumn++)//рисование одной строки с ячейками
                 {
                     var brush = (numberString + numberColumn) % 2 == 0 ? blackBrash : whiteBrash;
                     CreateCell(graph,
                         brush,
-                        pointStartDrawChessboard.X + (numberColumn * cellSideLength) + thicknessFrame,
-                        pointStartDrawChessboard.Y + (numberString * cellSideLength) + thicknessFrame,
+                        pointStartDraw.X + numberColumn * cellSideLength,
+                        pointStartDraw.Y + numberString * cellSideLength,
                         cellSideLength
                     );
                 }
@@ -77,14 +76,17 @@ namespace Шахматная_доска
         }
 
         public void CreateСheckers(Graphics graph, SolidBrush myBrushBlue, Point pointStartDrawChessboard, float cellSideLength, int numberCellsRow, int diameterСhecker)
-        {
-            var thicknessFrame = pointStartDrawChessboard.X * 2;
-            for (int checkerNumber = 0; checkerNumber < numberCellsRow / 2; checkerNumber++)
-                CreateСhecker(graph,
-                    myBrushBlue,
-                    pointStartDrawChessboard.X + ((numberCellsRow / 2) + (cellSideLength * checkerNumber) * 2) + thicknessFrame,
-                    pointStartDrawChessboard.Y + (numberCellsRow / 2) + cellSideLength,                    
-                    diameterСhecker);
+        {   
+            for (int numberString = 0; numberString < 3 ; numberString++)//рисовани строк с шашками в столбик
+                for (int numberColumn = 0; numberColumn < numberCellsRow; numberColumn++)//рисовани одной строки с шашками
+                {                    
+                    if ((numberString + numberColumn) % 2 == 0)
+                        CreateСhecker(graph,
+                              myBrushBlue,
+                              pointStartDrawChessboard.X + cellSideLength * numberColumn + (cellSideLength - diameterСhecker) / 2f,
+                              pointStartDrawChessboard.Y + cellSideLength * numberString + (cellSideLength - diameterСhecker) / 2f,
+                              diameterСhecker);
+                }
         }
 
         private void CreateFrame(Graphics graph, Pen pen, float x, float y, float widthEdging, float thicknessEdging)
