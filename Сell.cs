@@ -7,12 +7,28 @@ using System.Drawing;
 
 namespace Шахматная_доска
 {
-    class Сell
+    public class Cell
     {
-        Color Color;
-        int Width;
-        int Height;
-        int X;
-        int Y;
+        public Color Color { get; set; }
+        public int Width { get; set; }
+        public int Height { get; set; }
+        public int X { get; set; }
+        public int Y { get; set; }
+        Graphics Graph;
+        public Cell()
+        {
+           
+        }
+
+        public Cell(Color color, Graphics graph)
+        {
+            this.Color = color;
+            this.Graph = graph;
+        }
+
+        public void Draw()
+        {
+            Graph.FillRectangle(new SolidBrush(Color), X, Y, Width, Height);
+        }
     }
 }

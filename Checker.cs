@@ -7,11 +7,16 @@ using System.Drawing;
 
 namespace Шахматная_доска
 {
-    class Checker
+    public class Checker
     {
-        Color Color;
-        int Diametr;
-        int X;
-        int Y;
+        Color Color { get; set; }
+        public int Diametr { get; set; }
+        public int X { get; set; }
+        public int Y { get; set; }
+        
+        public Checker(Color color)
+        {
+            this.Color = color;
+        }
     }
 }

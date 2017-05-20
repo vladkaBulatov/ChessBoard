@@ -12,15 +12,31 @@ namespace Шахматная_доска
 {
     public partial class Form1 : Form
     {
+        ChessBoard ChessBoard;
+        Cell Cell;
+
         public Form1()
         {
             InitializeComponent();
-            picture.Width = Math.Min(this.Width, this.Height) - 50;
-            picture.Height = Math.Min(this.Width, this.Height) - 50;
+            var bmp = new Bitmap(picture.Width, picture.Height);
+            var graph = Graphics.FromImage(bmp);
+            ChessBoard = new ChessBoard(graph);
+            Cell = new Cell();
+            var x = 20;
+            var y = 20;
+            var width = picture.Width;
+            var height = picture.Height;
+            ChessBoard.Width = width;
+            ChessBoard.Height = height;
+            ChessBoard.X = x;
+            ChessBoard.Y = y;
+            
+            ChessBoard.CreateCells();
+            picture.Image = bmp;
+            //CreateChessboard();
 
-            CreateChessboard();
         }
-        public void CreateChessboard()
+        /*public void CreateChessboard()
         {
             var solidBrushBlack = new SolidBrush(Color.Black);
             var solidBrushWhite = new SolidBrush(Color.White);
@@ -45,15 +61,15 @@ namespace Шахматная_доска
             CreateСheckers(graph, myBrushBlue, pointStartDrawCellsOnBoard, cellSideLength, numberCellsRow, diameterСhecker);
 
             picture.Image= bmp;
-        }
-        
+        }*/
+
 
         private void CreateCell(Graphics graph, SolidBrush solidBrush, float x, float y, float sizeSquare)
         {            
             graph.FillRectangle( solidBrush, x, y, sizeSquare, sizeSquare);
         }
 
-       private void CreateCells(Graphics graph, Point pointStartDraw, float cellSideLength, int numberCellsRow, int thicknessFrame)
+       /*private void CreateCells(Graphics graph, Point pointStartDraw, float cellSideLength, int numberCellsRow, int thicknessFrame)
        {
             var blackBrash = new SolidBrush(Color.Black);
             var whiteBrash = new SolidBrush(Color.White);
@@ -69,7 +85,7 @@ namespace Шахматная_доска
                         cellSideLength
                     );
                 }
-        }
+        }*/
         public void CreateСhecker(Graphics graph, SolidBrush myBrushBlue, float x, float y, float diameter)
         {
             graph.FillEllipse(myBrushBlue, x, y, diameter, diameter);

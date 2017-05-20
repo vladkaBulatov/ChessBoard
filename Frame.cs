@@ -3,15 +3,21 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Drawing;
 
 namespace Шахматная_доска
 {
-    class Frame
+    public class Frame
     {
+        public Pen Pen;
+        public int Width { get; set; }
+        public int Height { get; set; }
+        public int X { get; set; }
+        public int Y { get; set; }
 
-        int Width;
-        int Height;
-        int X;
-        int Y;
+        public Frame()
+        {
+            Pen = new Pen(Color.Black);
+        }
     }
 }
