@@ -26,7 +26,7 @@ namespace Шахматная_доска
             this.Graph = graph;
         }
 
-        public void Draw()
+        public void DrawCell()
         {
             Graph.FillRectangle(new SolidBrush(Color), X, Y, Width, Height);
         }

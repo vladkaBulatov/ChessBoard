@@ -32,8 +32,7 @@ namespace Шахматная_доска
         {
             var cells = new List<Cell>();
             for (int i = 0; i < 64; i++)
-            {
-                
+            {   
                 var heightCell = Height/8;
                 var widthCell = heightCell;
                 var numberColumn = i % 8;
@@ -49,10 +48,26 @@ namespace Шахматная_доска
                 cell.Height = heightCell;
                 cell.Width = widthCell;
                 
-                cell.Draw();
+                cell.DrawCell();
                 cells.Add(cell);
             }
+            
+        }
 
+        public void CreateCheckers()
+        {
+            var xChecker = Height / 8;
+            var yChecker = xChecker;
+            var checkers = new List<Checker>();
+            Color color = Color.Red;
+            var checker = new Checker(color, Graph);
+            checker.X = xChecker / 8;
+            checker.Y = checker.X;
+            checker.Height = xChecker - 20;
+            checker.Width = checker.Height;
+
+            checker.DrawChecker();
+            checkers.Add(checker);
         }
     }
 }

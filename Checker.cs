@@ -13,10 +13,23 @@ namespace Шахматная_доска
         public int Diametr { get; set; }
         public int X { get; set; }
         public int Y { get; set; }
-        
-        public Checker(Color color)
+        public int Width { get; set; }
+        public int Height { get; set; }
+        Graphics Graph;
+        public Checker()
+        {
+
+        }
+
+        public Checker(Color color, Graphics graph)
         {
             this.Color = color;
+            this.Graph = graph;
+        }
+
+        public void DrawChecker()
+        { 
+            Graph.FillEllipse(new SolidBrush(Color), X, Y, Height, Width);
         }
     }
 }

@@ -17,6 +17,7 @@ namespace Шахматная_доска
         public MainForm()
         {   
             InitializeComponent();
+            picture.Width = picture.Height;
         }
 
         private void PicturePaint(object sender, PaintEventArgs e)
@@ -24,16 +25,17 @@ namespace Шахматная_доска
             var bmp = new Bitmap(picture.Width, picture.Height);
             var graph = Graphics.FromImage(bmp);
             ChessBoard = new ChessBoard(graph);
-            var x = 0;
-            var y = 0;
+            var x = 3;
+            var y = x;
             
-            ChessBoard.Height = picture.Height;
-            ChessBoard.Width = picture.Width;
+            ChessBoard.Height = picture.Height - x ;
+            ChessBoard.Width = picture.Width - y;
 
             ChessBoard.X = x;
             ChessBoard.Y = y;
 
             ChessBoard.CreateCells();
+            ChessBoard.CreateCheckers();
             picture.Image = bmp;
         }
 
