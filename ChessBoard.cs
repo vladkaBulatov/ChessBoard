@@ -30,12 +30,12 @@ namespace Шахматная_доска
 
         public void CreateCells()
         {
-            List<Cell> Cells = new List<Cell>();
+            var cells = new List<Cell>();
             for (int i = 0; i < 64; i++)
             {
                 
                 var heightCell = Height/8;
-                var widthCell = Width/8;
+                var widthCell = heightCell;
                 var numberColumn = i % 8;
                 var numberString = (int)Math.Floor(i / 8.0);
                 var color = (numberString + numberColumn) % 2 == 0 ? Color.Black : Color.White;
@@ -45,11 +45,12 @@ namespace Шахматная_доска
                 var cell = new Cell(color, Graph);
                 cell.X = xCell;
                 cell.Y = yCell;
+
                 cell.Height = heightCell;
                 cell.Width = widthCell;
                 
                 cell.Draw();
-                Cells.Add(cell);
+                cells.Add(cell);
             }
 
         }
